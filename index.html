@@ -8,67 +8,72 @@
     @import url('https://googleapis.com');
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Share Tech Mono', monospace;
-      background: #02040a;
-      color: #00f3ff;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
+      font-family: 'Share Tech Mono', monospace; background: #02040a; color: #00f3ff;
+      min-height: 100vh; overflow-x: hidden; display: flex; justify-content: center; align-items: center; padding: 20px;
     }
     canvas#holoCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
     .scanline {
       position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 243, 255, 0.04) 50%);
-      background-size: 100% 4px;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 243, 255, 0.04) 50%); background-size: 100% 4px;
     }
     .hud-container {
-      position: relative; z-index: 2; width: 100%; max-width: 440px;
-      background: rgba(5, 12, 26, 0.78); backdrop-filter: blur(18px);
-      border: 1px solid rgba(0, 243, 255, 0.45); border-radius: 22px;
-      padding: 28px 24px; box-shadow: 0 0 45px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+      position: relative; z-index: 2; width: 100%; max-width: 450px;
+      background: rgba(5, 12, 26, 0.82); backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 243, 255, 0.5); border-radius: 24px;
+      padding: 28px 24px; box-shadow: 0 0 50px rgba(0, 243, 255, 0.25), inset 0 0 25px rgba(0, 243, 255, 0.1);
     }
-    .top-bar { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #38bdf8; margin-bottom: 14px; border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 10px; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #38bdf8; margin-bottom: 14px; border-bottom: 1px solid rgba(0, 243, 255, 0.25); padding-bottom: 10px; }
     .status-dot { display: inline-block; width: 9px; height: 9px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; margin-right: 6px; animation: blink 1s infinite; }
     @keyframes blink { 50% { opacity: 0.3; } }
     h1 {
-      font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900; text-align: center;
+      font-family: 'Orbitron', sans-serif; font-size: 25px; font-weight: 900; text-align: center;
       background: linear-gradient(90deg, #00f3ff, #e879f9, #ffe600); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       letter-spacing: 2px; margin-bottom: 6px;
     }
-    .subtitle { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 18px; }
+    .subtitle { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
     .terminal-box {
-      background: rgba(1, 4, 12, 0.9); border: 1px solid rgba(0, 243, 255, 0.3);
-      border-radius: 12px; padding: 12px; height: 115px; overflow: hidden;
-      font-size: 12px; color: #22c55e; line-height: 1.5; margin-bottom: 18px;
-      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+      background: rgba(1, 4, 12, 0.92); border: 1px solid rgba(0, 243, 255, 0.35);
+      border-radius: 12px; padding: 12px; height: 105px; overflow: hidden;
+      font-size: 12px; color: #22c55e; line-height: 1.5; margin-bottom: 16px;
     }
     .scanner-section { margin-bottom: 18px; }
     .input-row { display: flex; gap: 8px; }
     input {
-      flex: 1; padding: 12px; border-radius: 10px; border: 1px solid rgba(0, 243, 255, 0.4);
-      background: rgba(2, 6, 23, 0.9); color: #fff; font-family: 'Share Tech Mono', monospace; font-size: 14px; outline: none;
+      flex: 1; padding: 13px; border-radius: 12px; border: 1px solid rgba(0, 243, 255, 0.45);
+      background: rgba(2, 6, 23, 0.9); color: #fff; font-family: 'Share Tech Mono', monospace; font-size: 15px; outline: none;
     }
-    input:focus { border-color: #e879f9; box-shadow: 0 0 15px rgba(232, 121, 249, 0.4); }
+    input:focus { border-color: #e879f9; box-shadow: 0 0 18px rgba(232, 121, 249, 0.5); }
     .btn {
-      padding: 12px 16px; border: none; border-radius: 10px; font-family: 'Orbitron', sans-serif;
+      padding: 12px 18px; border: none; border-radius: 12px; font-family: 'Orbitron', sans-serif;
       font-weight: 800; font-size: 12px; cursor: pointer; transition: 0.25s; letter-spacing: 1px;
     }
-    .scan-btn { background: #00f3ff; color: #02040a; box-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
-    .scan-btn:hover { transform: scale(1.04); background: #38bdf8; }
+    .scan-btn { background: linear-gradient(135deg, #00f3ff, #38bdf8); color: #02040a; box-shadow: 0 0 18px rgba(0, 243, 255, 0.6); }
+    .scan-btn:hover { transform: scale(1.05); }
+
+    /* Animated Hologram Result Box */
     .scan-result {
-      margin-top: 10px; padding: 10px; border-radius: 10px; background: rgba(232, 121, 249, 0.12);
-      border: 1px dashed #e879f9; color: #facc15; font-size: 13px; display: none; text-align: center;
+      margin-top: 14px; padding: 16px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 27, 75, 0.9));
+      border: 1px solid #e879f9; box-shadow: 0 0 25px rgba(232, 121, 249, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.2);
+      display: none; text-align: left; position: relative; overflow: hidden;
+      animation: holoReveal 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+    @keyframes holoReveal {
+      0% { opacity: 0; transform: scale(0.85) translateY(12px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .scan-header { font-family: 'Orbitron', sans-serif; font-size: 13px; color: #00f3ff; letter-spacing: 1px; margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .scan-body { font-size: 14px; color: #ffe600; line-height: 1.45; font-weight: bold; }
+    .scan-bar { height: 4px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 4px; margin-top: 10px; overflow: hidden; }
+    .scan-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #00f3ff, #e879f9, #ffe600); animation: barLoad 1.2s ease-out; }
+    @keyframes barLoad { 0% { width: 0%; } 100% { width: 100%; } }
+
     .overdrive-btn {
-      width: 100%; padding: 15px; font-size: 14px; color: #02040a;
+      width: 100%; padding: 15px; font-size: 13px; color: #02040a;
       background: linear-gradient(90deg, #00f3ff, #ff00ea, #ffe600); background-size: 200% auto;
       box-shadow: 0 0 25px rgba(255, 0, 234, 0.5); animation: flow 3s linear infinite;
     }
     @keyframes flow { 100% { background-position: 200% 50%; } }
-    .overdrive-btn:hover { transform: scale(1.03); box-shadow: 0 0 35px rgba(0, 243, 255, 0.8); }
     .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; text-align: center; }
     .stat-card { background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 243, 255, 0.2); border-radius: 10px; padding: 8px; }
     .stat-val { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #ffe600; font-weight: bold; }
@@ -80,8 +85,6 @@
 <body>
   <canvas id="holoCanvas"></canvas>
   <div class="scanline"></div>
-
-  <!-- Chupi hui video sirf mp3.mp4 ki awaaz bajane ke liye -->
   <video id="bgVoice" src="mp3.mp4" playsinline loop style="display:none;"></video>
 
   <div class="hud-container" id="hudBox">
@@ -91,111 +94,131 @@
     </div>
     <h1>JARVIS CORE</h1>
     <div class="subtitle">AUTONOMOUS CI/CD & NEURAL COMMAND</div>
-
     <div class="terminal-box" id="terminal"></div>
 
     <div class="scanner-section">
       <div class="input-row">
-        <input type="text" id="targetName" placeholder="Classmate ka naam likhein...">
+        <input type="text" id="targetName" placeholder="Write their name..." onkeypress="if(event.key==='Enter') scanTarget()">
         <button class="btn scan-btn" onclick="scanTarget()">SCAN 🎯</button>
       </div>
-      <div class="scan-result" id="scanResult"></div>
+      <div class="scan-result" id="scanResult">
+        <div class="scan-header"><span id="resTitle">TARGET VERIFIED</span><span>100% MATCH</span></div>
+        <div class="scan-body" id="resText"></div>
+        <div class="scan-bar"><div class="scan-fill" id="resBar"></div></div>
+      </div>
     </div>
 
     <button class="btn overdrive-btn" id="odBtn" onclick="toggleOverdrive()">⚡ ACTIVATE OVERDRIVE + AUDIO ⚡</button>
 
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-val">99.9%</div><div class="stat-lbl">CI/CD UPTIME</div></div>
-      <div class="stat-card"><div class="stat-val" id="fpsVal">120 FPS</div><div class="stat-lbl">3D ENGINE</div></div>
+      <div class="stat-card"><div class="stat-val">120 FPS</div><div class="stat-lbl">3D ENGINE</div></div>
       <div class="stat-card"><div class="stat-val">GOD</div><div class="stat-lbl">ACCESS LVL</div></div>
     </div>
   </div>
 
   <script>
     setInterval(() => { document.getElementById('liveClock').innerText = new Date().toLocaleTimeString(); }, 1000);
-
     const logs = [
       "> Initializing Muneeb Neural Core...",
       "> GitHub Actions CI/CD Pipeline: VERIFIED [OK]",
-      "> Bypassing Classmate Firewall... 100%",
-      "> 3D Hologram Engine: ONLINE",
-      "> Waiting for Commander Muneeb's order..."
+      "> Biometric Voice Synthesizer: ONLINE",
+      "> Waiting for target name..."
     ];
     let logIdx = 0;
     const term = document.getElementById('terminal');
     function typeLogs() {
       if (logIdx < logs.length) {
-        const line = document.createElement('div');
-        line.innerText = logs[logIdx++];
-        term.appendChild(line);
-        setTimeout(typeLogs, 650);
+        const line = document.createElement('div'); line.innerText = logs[logIdx++];
+        term.appendChild(line); setTimeout(typeLogs, 600);
       }
     }
     typeLogs();
 
-    const reports = [
-      "Brain Power: 2% | Chai Addiction: 98% ☕",
-      "Threat Level: ZERO | Sirf baatein badi hain 😂",
-      "Status: Exam se 1 raat pehle parhne wala legend 📚",
-      "Alert: VIP Banda detected — Respect +100 🔥",
-      "System Error: Itna confidence kahan se aata hai? 🤯"
-    ];
+    const profiles = {
+      "faisal": "Top secret architect detected. System respects his unmatched focus and high IQ.",
+      "mohsin": "Master strategist online. Always calm under pressure with zero panic detected.",
+      "usman": "High-energy legend scanned. Warning: Too much confidence detected in the room.",
+      "shahzaib": "Royal aura verified. Walks in like he owns the entire cloud server.",
+      "qudoos": "Silent genius alert. Minimal words, maximum brainpower.",
+      "ali raza": "Elite commander vibes. Loyalty and leadership rated at one hundred percent.",
+      "husnain": "Charisma overload. Smooth operator with unstoppable energy.",
+      "hussaiin": "Charisma overload. Smooth operator with unstoppable energy.",
+      "hussain": "Charisma overload. Smooth operator with unstoppable energy.",
+      "burhan": "Heavyweight thinker detected. Solves complex problems before they even start.",
+      "ryan": "Future tech mogul vibes. Speed, style, and intelligence off the charts.",
+      "haseeb": "Sharpest mind in the building. Precision level: absolute perfection.",
+      "awais": "Certified chill legend. Zero stress and maximum positive vibes.",
+      "hassan": "Alpha leader scanned. Respect level automatically boosted to maximum."
+    };
+
+    function speakEnglish(text) {
+      window.speechSynthesis.cancel();
+      const speech = new SpeechSynthesisUtterance(text);
+      speech.lang = 'en-US';
+      speech.rate = 0.98;
+      speech.pitch = 0.95;
+      window.speechSynthesis.speak(speech);
+    }
+
     function scanTarget() {
-      const name = document.getElementById('targetName').value.trim();
-      const res = document.getElementById('scanResult');
-      if (!name) return;
-      res.style.display = "block";
-      res.innerText = `Scanning ${name.toUpperCase()}...`;
-      setTimeout(() => {
-        const pick = reports[Math.floor(Math.random() * reports.length)];
-        res.innerText = `🎯 [${name.toUpperCase()}]: ${pick}`;
-      }, 600);
+      const rawName = document.getElementById('targetName').value.trim();
+      if (!rawName) return;
+      const key = rawName.toLowerCase();
+      const resBox = document.getElementById('scanResult');
+      const resTitle = document.getElementById('resTitle');
+      const resText = document.getElementById('resText');
+      const resBar = document.getElementById('resBar');
+
+      resBox.style.display = "none";
+      void resBox.offsetWidth;
+      resBox.style.display = "block";
+      resBar.style.animation = "none";
+      void resBar.offsetWidth;
+      resBar.style.animation = "barLoad 1s ease-out";
+
+      const message = profiles[key] || `Target ${rawName} scanned. VIP status confirmed by Muneeb Command Center.`;
+      resTitle.innerText = `🎯 TARGET: ${rawName.toUpperCase()}`;
+      resText.innerText = message;
+      speakEnglish(`Target ${rawName}. ${message}`);
     }
 
     let overdrive = false;
     function toggleOverdrive() {
       overdrive = !overdrive;
-      const box = document.getElementById('hudBox');
-      const voice = document.getElementById('bgVoice');
-      const btn = document.getElementById('odBtn');
+      const box = document.getElementById('hudBox'), voice = document.getElementById('bgVoice'), btn = document.getElementById('odBtn');
       box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
-
       if (overdrive) {
         btn.innerText = "🔥 OVERDRIVE ACTIVE (STOP) 🔥";
-        voice.play().catch(() => {});
+        voice.muted = false;
+        voice.volume = 1.0;
+        voice.play().catch(() => { speakEnglish("Overdrive mode activated by Commander Muneeb."); });
       } else {
         btn.innerText = "⚡ ACTIVATE OVERDRIVE + AUDIO ⚡";
         voice.pause();
       }
     }
 
-    const canvas = document.getElementById('holoCanvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('holoCanvas'), ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-
     let dots = [], angle = 0;
     for (let i = 0; i < 160; i++) {
       const theta = Math.acos(2 * Math.random() - 1), phi = 2 * Math.PI * Math.random();
       dots.push({ x: Math.sin(theta) * Math.cos(phi), y: Math.sin(theta) * Math.sin(phi), z: Math.cos(theta) });
     }
     function drawSphere() {
-      ctx.fillStyle = "rgba(2, 4, 10, 0.25)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(2, 4, 10, 0.25)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
       angle += overdrive ? 0.045 : 0.01;
       const radius = Math.min(canvas.width, canvas.height) * (overdrive ? 0.42 : 0.34);
       const cx = canvas.width / 2, cy = canvas.height / 2;
-
       dots.forEach((d, idx) => {
         const rx = d.x * Math.cos(angle) - d.z * Math.sin(angle);
         const rz = d.z * Math.cos(angle) + d.x * Math.sin(angle);
         const scale = 300 / (300 + rz * radius);
         const px = cx + rx * radius * scale, py = cy + d.y * radius * scale;
-
-        ctx.beginPath();
-        ctx.arc(px, py, (overdrive ? 3 : 2) * scale, 0, Math.PI * 2);
-        ctx.fillStyle = overdrive ? (idx % 2 === 0 ? "#ff00ea" : "#ffe600") : "#00f3ff";
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(px, py, (overdrive ? 3 : 2) * scale, 0, Math.PI * 2);
+        ctx.fillStyle = overdrive ? (idx % 2 === 0 ? "#ff00ea" : "#ffe600") : "#00f3ff"; ctx.fill();
       });
       requestAnimationFrame(drawSphere);
     }
