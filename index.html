@@ -18,7 +18,7 @@
       perspective: 1000px;
     }
 
-    /* 3D Moving Neon Lights Background */
+    /* 3D Moving Neon Lights */
     .light {
       position: absolute;
       border-radius: 50%;
@@ -27,24 +27,9 @@
       z-index: 0;
       animation: moveLights 8s infinite alternate ease-in-out;
     }
-    .light-1 {
-      width: 320px; height: 320px;
-      background: #7c3aed;
-      top: -60px; left: -60px;
-    }
-    .light-2 {
-      width: 350px; height: 350px;
-      background: #06b6d4;
-      bottom: -80px; right: -60px;
-      animation-delay: 2s;
-    }
-    .light-3 {
-      width: 220px; height: 220px;
-      background: #ec4899;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation-duration: 6s;
-    }
+    .light-1 { width: 320px; height: 320px; background: #7c3aed; top: -60px; left: -60px; }
+    .light-2 { width: 350px; height: 350px; background: #06b6d4; bottom: -80px; right: -60px; animation-delay: 2s; }
+    .light-3 { width: 220px; height: 220px; background: #ec4899; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
     @keyframes moveLights {
       0% { transform: translate(0, 0) scale(1); }
@@ -55,13 +40,13 @@
     .card {
       position: relative;
       z-index: 1;
-      background: rgba(15, 23, 42, 0.65);
+      background: rgba(15, 23, 42, 0.7);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.18);
-      padding: 40px 30px;
+      padding: 35px 28px;
       border-radius: 26px;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(56, 189, 248, 0.15);
-      width: 350px;
+      width: 360px;
       text-align: center;
       transform-style: preserve-3d;
       animation: cardFloat 4s ease-in-out infinite;
@@ -69,7 +54,7 @@
 
     @keyframes cardFloat {
       0%, 100% { transform: translateY(0px) rotateX(2deg) rotateY(-2deg); }
-      50% { transform: translateY(-12px) rotateX(-2deg) rotateY(2deg); }
+      50% { transform: translateY(-10px) rotateX(-2deg) rotateY(2deg); }
     }
 
     .badge {
@@ -81,24 +66,19 @@
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 1.5px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       border: 1px solid rgba(56, 189, 248, 0.4);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 26px;
       margin-bottom: 8px;
       background: linear-gradient(90deg, #38bdf8, #e879f9, #facc15);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    p {
-      color: #cbd5e1;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
+    p { color: #cbd5e1; font-size: 14px; margin-bottom: 22px; }
 
     input {
       width: 100%;
@@ -111,22 +91,13 @@
       text-align: center;
       letter-spacing: 4px;
       outline: none;
-      transition: 0.3s;
     }
-    input::placeholder {
-      color: rgba(148, 163, 184, 0.45);
-      letter-spacing: 1px;
-      font-size: 14px;
-    }
-    input:focus {
-      border-color: #e879f9;
-      box-shadow: 0 0 20px rgba(232, 121, 249, 0.5);
-    }
+    input::placeholder { color: rgba(148, 163, 184, 0.45); letter-spacing: 1px; font-size: 14px; }
 
     button {
       width: 100%;
       padding: 14px;
-      margin-top: 20px;
+      margin-top: 18px;
       border: none;
       border-radius: 14px;
       background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899);
@@ -134,65 +105,48 @@
       font-weight: bold;
       font-size: 16px;
       cursor: pointer;
-      transition: 0.3s;
       box-shadow: 0 10px 25px rgba(139, 92, 246, 0.5);
     }
-    button:hover {
-      transform: scale(1.03);
-      box-shadow: 0 15px 30px rgba(236, 72, 153, 0.7);
-    }
 
-    .error {
-      color: #fb7185;
-      font-size: 13px;
-      margin-top: 12px;
+    .error { color: #fb7185; font-size: 13px; margin-top: 12px; display: none; }
+
+    /* Media (Photo & Video) Styling */
+    .meme-screen { display: none; }
+    .media-item {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      border: 2px solid #e879f9;
+      box-shadow: 0 10px 25px rgba(232, 121, 249, 0.4);
       display: none;
     }
 
-    /* 3D Meme Screen */
-    .meme-screen { display: none; }
     .floating-3d-object {
-      font-size: 85px;
+      font-size: 70px;
       display: inline-block;
-      margin: 10px 0;
-      filter: drop-shadow(0 15px 25px rgba(236, 72, 153, 0.7));
+      margin: 8px 0;
       animation: spin3D 3s infinite ease-in-out;
     }
 
     @keyframes spin3D {
       0%, 100% { transform: translateY(0) rotateY(-18deg) scale(1); }
-      50% { transform: translateY(-15px) rotateY(18deg) scale(1.12); }
-    }
-
-    .meme-pic {
-      width: 100%;
-      max-height: 180px;
-      object-fit: cover;
-      border-radius: 14px;
-      margin-bottom: 12px;
-      border: 2px solid #e879f9;
-      display: none; /* Jab meme.jpg upload hogi to khud dikhegi */
+      50% { transform: translateY(-12px) rotateY(18deg) scale(1.1); }
     }
 
     .meme-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       color: #facc15;
-      text-shadow: 0 0 15px rgba(250, 204, 21, 0.5);
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
-    .back-btn {
-      background: rgba(51, 65, 85, 0.8);
-      box-shadow: none;
-      margin-top: 18px;
-    }
-    .back-btn:hover { background: #475569; box-shadow: none; }
+    .back-btn { background: rgba(51, 65, 85, 0.8); box-shadow: none; margin-top: 15px; }
   </style>
 </head>
 <body>
 
-  <!-- 3D Background Lights -->
   <div class="light light-1"></div>
   <div class="light light-2"></div>
   <div class="light light-3"></div>
@@ -209,10 +163,13 @@
 
   <!-- Meme Screen -->
   <div class="card meme-screen" id="memeScreen">
-    <div class="badge" style="color:#facc15; border-color:#facc15;">GOTCHA 😂</div>
+    <div class="badge" style="color:#facc15; border-color:#facc15;">SURPRISE 😂</div>
 
-    <!-- Agar aap meme.jpg upload karenge to yahan dikhegi -->
-    <img src="meme.jpg" alt="Meme" class="meme-pic" onload="this.style.display='block'">
+    <!-- Video (agar meme.mp4 upload hogi to khud chalegi) -->
+    <video id="memeVideo" class="media-item" src="meme.mp4" playsinline loop onloadeddata="this.style.display='block'"></video>
+
+    <!-- Photo (agar meme.jpg upload hogi to khud dikhegi) -->
+    <img id="memePic" class="media-item" src="meme.jpg" alt="Meme" onload="this.style.display='block'">
 
     <!-- 3D Floating Joker & Emoji -->
     <div class="floating-3d-object">🤡🖕🏻</div>
@@ -221,7 +178,6 @@
     <button class="back-btn" onclick="lockAgain()">Wapas Lock Karein 🔒</button>
   </div>
 
-  <!-- Optional Audio File (Agar aap sound.mp3 upload karein) -->
   <audio id="prankAudio" src="sound.mp3"></audio>
 
   <script>
@@ -233,32 +189,480 @@
         document.getElementById('lockScreen').style.display = "none";
         document.getElementById('memeScreen').style.display = "block";
         error.style.display = "none";
-        playSound();
+
+        const video = document.getElementById('memeVideo');
+        if (video.style.display === 'block') {
+          video.play();
+        } else {
+          document.getElementById('prankAudio').play().catch(() => {});
+        }
       } else {
         error.style.display = "block";
       }
     }
 
-    function playSound() {
-      const audio = document.getElementById('prankAudio');
-      // Pehle sound.mp3 chalane ki koshish karega; agar file nahi hui to browser ki voice bolegi
-      audio.play().catch(() => {
-        const msg = new SpeechSynthesisUtterance("Surprise! Muneeb Bhai ki taraf se special gift!");
-        msg.rate = 1;
-        msg.pitch = 1.1;
-        window.speechSynthesis.speak(msg);
-      });
-    }
-
     function lockAgain() {
+      const video = document.getElementById('memeVideo');
       const audio = document.getElementById('prankAudio');
+      video.pause();
+      video.currentTime = 0;
       audio.pause();
       audio.currentTime = 0;
+
       document.getElementById('memeScreen').style.display = "none";
       document.getElementById('lockScreen').style.display = "block";
       document.getElementById('passInput').value = "";
     }
   </script>
 
+</body>
+</html>
+Use code with caution.
+
+GitHub Par Photo Ya Video Kaise Upload Karein?
+
+1. Apni repository ke main page par Add file > Upload files par click karein.
+2. Agar photo lagani ho to file ka naam meme.jpg rakhein; agar video lagani ho to naam meme.mp4 rakhein.
+3. File drag karke neeche Commit changes daba dein—GitHub Action khud chalega aur aapki live website par photo/video add ho jayegi!
+Aap apni photo (meme.jpg) ya video (meme.mp4) upload karke dekhein—agar kisi file ke format (jaise .png ya .mov) mein masla aaye to bata dein.
+
+nhi maza nhi aya is main is high level animation add ker karo puri aag laga du developer crying in the corner ker du
+
+Yeh lijiye "Developer Crying in the Corner" level ki ultra-heavy 3D particle canvas, mouse-tilt physics, glitch effects, aur unlock hote hi screen shake + laser confetti explosion wala index.html code—bina kisi external library ke seedha chalega!
+Apni index.html ka purana saara code hata kar yeh paste karein aur Commit changes daba dein:
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUNEEB // CYBER VAULT ⚡</title>
+  <style>
+    @import url('https://googleapis.com');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: #030308;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      perspective: 1200px;
+    }
+
+    canvas#fxCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Cyber Grid Floor */
+    .cyber-grid {
+      position: fixed;
+      bottom: -30%;
+      left: -50%;
+      width: 200%;
+      height: 80%;
+      background-image: 
+        linear-gradient(to right, rgba(0, 243, 255, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 0, 234, 0.15) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: rotateX(75deg);
+      animation: gridMove 4s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 50px; }
+    }
+
+    /* 3D Interactive Tilt Card */
+    .vault-wrapper {
+      position: relative;
+      z-index: 2;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+    }
+
+    .card {
+      position: relative;
+      width: 380px;
+      padding: 42px 32px;
+      border-radius: 28px;
+      background: rgba(10, 14, 28, 0.72);
+      backdrop-filter: blur(24px);
+      text-align: center;
+      transform-style: preserve-3d;
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.9),
+        0 0 35px rgba(0, 243, 255, 0.25),
+        inset 0 0 25px rgba(255, 0, 234, 0.15);
+      overflow: hidden;
+    }
+
+    /* Animated Neon Conic Border */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 30px;
+      background: conic-gradient(from 0deg, #00f3ff, #ff00ea, #ffe600, #00f3ff);
+      z-index: -2;
+      animation: rotateBorder 3s linear infinite;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 26px;
+      background: radial-gradient(circle at top, #111836, #070913);
+      z-index: -1;
+    }
+    @keyframes rotateBorder {
+      100% { transform: rotate(360deg); }
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 6px 16px;
+      border-radius: 50px;
+      color: #00f3ff;
+      background: rgba(0, 243, 255, 0.1);
+      border: 1px solid rgba(0, 243, 255, 0.5);
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+      margin-bottom: 18px;
+      transform: translateZ(30px);
+    }
+
+    /* Glitch Title */
+    .glitch {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 2px 0 #ff00ea, -2px 0 #00f3ff;
+      animation: glitchAnim 2.5s infinite;
+      margin-bottom: 8px;
+      transform: translateZ(45px);
+    }
+    @keyframes glitchAnim {
+      0%, 92%, 100% { text-shadow: 2px 0 #ff00ea, -2px 0 #00f3ff; transform: translateZ(45px) skew(0deg); }
+      94% { text-shadow: -4px 0 #ff00ea, 4px 0 #00f3ff; transform: translateZ(45px) skew(6deg); }
+      96% { text-shadow: 4px 0 #ffe600, -4px 0 #00f3ff; transform: translateZ(45px) skew(-6deg); }
+    }
+
+    p {
+      color: #94a3b8;
+      font-size: 16px;
+      margin-bottom: 24px;
+      transform: translateZ(25px);
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 243, 255, 0.4);
+      background: rgba(2, 6, 23, 0.85);
+      color: #00f3ff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      text-align: center;
+      letter-spacing: 5px;
+      outline: none;
+      transition: 0.3s;
+      transform: translateZ(35px);
+    }
+    input::placeholder {
+      color: rgba(148, 163, 184, 0.45);
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: 2px;
+      font-size: 15px;
+    }
+    input:focus {
+      border-color: #ff00ea;
+      box-shadow: 0 0 25px rgba(255, 0, 234, 0.6);
+    }
+
+    .cyber-btn {
+      width: 100%;
+      padding: 15px;
+      margin-top: 22px;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #030308;
+      background: linear-gradient(90deg, #00f3ff, #ff00ea, #ffe600);
+      background-size: 200% auto;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 25px rgba(0, 243, 255, 0.6);
+      transform: translateZ(40px);
+      animation: gradientFlow 3s linear infinite;
+    }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+    .cyber-btn:hover {
+      transform: translateZ(50px) scale(1.04);
+      box-shadow: 0 0 40px rgba(255, 0, 234, 0.9);
+    }
+
+    .error {
+      color: #ff2a6d;
+      font-weight: 700;
+      font-size: 14px;
+      margin-top: 14px;
+      display: none;
+      text-shadow: 0 0 10px rgba(255, 42, 109, 0.7);
+    }
+
+    /* Screen Shake on Wrong/Unlock */
+    .shake { animation: shakeAnim 0.45s cubic-bezier(.36,.07,.19,.97) both; }
+    @keyframes shakeAnim {
+      10%, 90% { transform: translate3d(-4px, 0, 0); }
+      20%, 80% { transform: translate3d(6px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-10px, 0, 0); }
+      40%, 60% { transform: translate3d(10px, 0, 0); }
+    }
+
+    /* Meme Screen */
+    .meme-screen { display: none; }
+    .media-item {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      border: 2px solid #00f3ff;
+      box-shadow: 0 0 25px rgba(0, 243, 255, 0.5);
+      display: none;
+      transform: translateZ(35px);
+    }
+
+    .floating-3d-joker {
+      font-size: 90px;
+      display: inline-block;
+      margin: 8px 0;
+      transform: translateZ(60px);
+      filter: drop-shadow(0 0 25px rgba(255, 0, 234, 0.9));
+      animation: hyperFloat 2.4s infinite ease-in-out;
+    }
+    @keyframes hyperFloat {
+      0%, 100% { transform: translateZ(60px) translateY(0) rotateY(-25deg) rotateZ(-5deg) scale(1); }
+      50% { transform: translateZ(85px) translateY(-16px) rotateY(25deg) rotateZ(5deg) scale(1.18); }
+    }
+
+    .meme-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      color: #ffe600;
+      text-shadow: 0 0 18px rgba(255, 230, 0, 0.8);
+      margin-top: 8px;
+      transform: translateZ(40px);
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: none;
+      margin-top: 18px;
+    }
+    .back-btn:hover { background: rgba(255, 42, 109, 0.3); box-shadow: 0 0 20px rgba(255, 42, 109, 0.5); }
+  </style>
+</head>
+<body>
+
+  <div class="cyber-grid"></div>
+  <canvas id="fxCanvas"></canvas>
+
+  <div class="vault-wrapper" id="tiltBox">
+    <!-- Lock Screen -->
+    <div class="card" id="lockScreen">
+      <div class="badge">SYSTEM LOCKED // LVL 99</div>
+      <div class="glitch">MUNEEB VAULT</div>
+      <p>Enter override key to breach firewall</p>
+      <input type="password" id="passInput" placeholder="Hint: 12" onkeypress="if(event.key==='Enter') unlock()">
+      <button class="cyber-btn" onclick="unlock()">BREACH SYSTEM ⚡</button>
+      <div class="error" id="errorMsg">⚠️ ACCESS DENIED! Hint: 12</div>
+    </div>
+
+    <!-- Meme Screen -->
+    <div class="card meme-screen" id="memeScreen">
+      <div class="badge" style="color:#ffe600; border-color:#ffe600;">SYSTEM HACKED 😂</div>
+
+      <video id="memeVideo" class="media-item" src="meme.mp4" playsinline loop onloadeddata="this.style.display='block'"></video>
+      <img id="memePic" class="media-item" src="meme.jpg" alt="Meme" onload="this.style.display='block'">
+
+      <div class="floating-3d-joker">🤡🖕🏻</div>
+      <div class="meme-title">MUNEEB BHAI KI TARAF SE SPECIAL SALAM! 🔥</div>
+      <button class="cyber-btn back-btn" onclick="lockAgain()">RE-LOCK VAULT 🔒</button>
+    </div>
+  </div>
+
+  <audio id="prankAudio" src="sound.mp3"></audio>
+
+  <script>
+    // 1. 3D Mouse & Touch Parallax Tilt Physics
+    const tiltBox = document.getElementById('tiltBox');
+    document.addEventListener('mousemove', (e) => {
+      const x = (window.innerWidth / 2 - e.pageX) / 18;
+      const y = (window.innerHeight / 2 - e.pageY) / 18;
+      tiltBox.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
+    });
+    document.addEventListener('mouseleave', () => {
+      tiltBox.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    });
+
+    // 2. Interactive Cyber Particle Network + Fireworks Canvas
+    const canvas = document.getElementById('fxCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    let particles = [];
+    let explosions = [];
+    const colors = ['#00f3ff', '#ff00ea', '#ffe600', '#7c3aed'];
+
+    for (let i = 0; i < 70; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 1.4,
+        vy: (Math.random() - 0.5) * 1.4,
+        size: Math.random() * 2.5 + 1,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+
+    function spawnExplosion(x, y) {
+      for (let i = 0; i < 90; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 8 + 2;
+        explosions.push({
+          x, y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          alpha: 1,
+          size: Math.random() * 4 + 2,
+          color: colors[Math.floor(Math.random() * colors.length)]
+        });
+      }
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
+        for (let j = i + 1; j < particles.length; j++) {
+          let p2 = particles[j];
+          let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (dist < 110) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist / 110})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+
+      for (let i = explosions.length - 1; i >= 0; i--) {
+        let ex = explosions[i];
+        ex.x += ex.vx;
+        ex.y += ex.vy;
+        ex.vy += 0.12;
+        ex.alpha -= 0.018;
+        if (ex.alpha <= 0) {
+          explosions.splice(i, 1);
+          continue;
+        }
+        ctx.globalAlpha = ex.alpha;
+        ctx.beginPath();
+        ctx.arc(ex.x, ex.y, ex.size, 0, Math.PI * 2);
+        ctx.fillStyle = ex.color;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+      requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+
+    // 3. Unlock & Sound Logic
+    function unlock() {
+      const pass = document.getElementById('passInput').value;
+      const error = document.getElementById('errorMsg');
+      const lockScreen = document.getElementById('lockScreen');
+
+      if (pass === "12") {
+        lockScreen.style.display = "none";
+        const memeScreen = document.getElementById('memeScreen');
+        memeScreen.style.display = "block";
+        memeScreen.classList.add('shake');
+        error.style.display = "none";
+
+        spawnExplosion(window.innerWidth / 2, window.innerHeight / 2);
+        setTimeout(() => spawnExplosion(window.innerWidth * 0.3, window.innerHeight * 0.4), 250);
+        setTimeout(() => spawnExplosion(window.innerWidth * 0.7, window.innerHeight * 0.4), 450);
+
+        const video = document.getElementById('memeVideo');
+        if (video.style.display === 'block') {
+          video.play();
+        } else {
+          document.getElementById('prankAudio').play().catch(() => {});
+        }
+      } else {
+        error.style.display = "block";
+        lockScreen.classList.remove('shake');
+        void lockScreen.offsetWidth;
+        lockScreen.classList.add('shake');
+      }
+    }
+
+    function lockAgain() {
+      const video = document.getElementById('memeVideo');
+      const audio = document.getElementById('prankAudio');
+      video.pause(); video.currentTime = 0;
+      audio.pause(); audio.currentTime = 0;
+
+      document.getElementById('memeScreen').style.display = "none";
+      document.getElementById('lockScreen').style.display = "block";
+      document.getElementById('passInput').value = "";
+    }
+  </script>
 </body>
 </html>
