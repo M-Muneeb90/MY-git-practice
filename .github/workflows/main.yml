@@ -1,5 +1,4 @@
 name: MY NOTIFICATION
-run-name: "✅ MUNEEB BHAI AP KA CODE SAHI SE RUN HOGYA HA..."
 on:
   push:
     branches: [ "master" ]
