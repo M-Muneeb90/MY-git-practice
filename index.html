@@ -10,7 +10,7 @@
     body {
       font-family: 'Rajdhani', sans-serif; background: #030308; color: #fff;
       min-height: 100vh; overflow: hidden; display: flex; justify-content: center;
-      align-items: center; perspective: 1300px;
+      align-items: center; perspective: 1200px; touch-action: none;
     }
     canvas#fxCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
     .cyber-grid {
@@ -21,11 +21,16 @@
     }
     @keyframes gridRun { 100% { background-position: 0 50px; } }
 
-    .tilt-wrap { position: relative; z-index: 5; transform-style: preserve-3d; transition: transform 0.1s ease-out; width: 92%; max-width: 400px; }
+    .tilt-wrap { position: relative; z-index: 5; transform-style: preserve-3d; transition: transform 0.12s ease-out; width: 92%; max-width: 400px; }
     .lock-card {
       position: relative; padding: 38px 28px; border-radius: 28px;
       background: rgba(10, 14, 28, 0.78); backdrop-filter: blur(22px); text-align: center;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 243, 255, 0.3); overflow: hidden;
+      animation: idleFloat 3.5s ease-in-out infinite;
+    }
+    @keyframes idleFloat {
+      0%, 100% { transform: translateY(0px) rotateZ(0deg); }
+      50% { transform: translateY(-10px) rotateZ(0.8deg); }
     }
     .lock-card::before {
       content: ""; position: absolute; inset: -3px; border-radius: 30px;
@@ -60,8 +65,8 @@
     .err { color: #ff2a6d; font-size: 14px; margin-top: 12px; display: none; font-weight: bold; }
     .shake { animation: shakeAnim 0.45s cubic-bezier(.36,.07,.19,.97) both; }
     @keyframes shakeAnim {
-      10%, 90% { transform: translate3d(-5px, 0, 0); } 20%, 80% { transform: translate3d(7px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-10px, 0, 0); } 40%, 60% { transform: translate3d(10px, 0, 0); }
+      10%, 90% { transform: translate3d(-6px, 0, 0); } 20%, 80% { transform: translate3d(8px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-12px, 0, 0); } 40%, 60% { transform: translate3d(12px, 0, 0); }
     }
 
     /* Stage 2: 3D Flying Sequence */
@@ -85,13 +90,16 @@
     @keyframes fromTop { 0% { opacity: 0; transform: translateY(-100vh) rotateX(720deg) scale(0.2); } 100% { opacity: 1; transform: translateY(0) rotateX(0deg) scale(1); } }
     @keyframes fromBottom { 0% { opacity: 0; transform: translateY(100vh) rotateY(720deg) scale(0.2); } 100% { opacity: 1; transform: translateY(0) rotateY(0deg) scale(1); } }
 
-    /* Stage 3: Transparent Full-Screen Page (Keeps Laser Web & Grid Visible Behind!) */
+    /* Stage 3: Full-Screen 3D Tilt & Floating Dashboard */
     .full-dashboard {
       position: fixed; inset: 0; z-index: 6; display: none; overflow-y: auto;
-      background: rgba(3, 3, 8, 0.42); backdrop-filter: blur(4px);
-      padding: 28px 20px;
+      background: rgba(3, 3, 8, 0.38); backdrop-filter: blur(3px);
+      padding: 28px 20px; perspective: 1200px;
     }
-    .dash-inner { max-width: 740px; margin: 0 auto; }
+    .dash-inner {
+      max-width: 740px; margin: 0 auto; transform-style: preserve-3d;
+      transition: transform 0.12s ease-out; animation: idleFloat 4s ease-in-out infinite;
+    }
     .top-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
     .mini-btn {
       padding: 10px 18px; border-radius: 12px; border: 1px solid #00f3ff;
@@ -123,7 +131,7 @@
   <div class="cyber-grid"></div>
   <canvas id="fxCanvas"></canvas>
 
-  <!-- Stage 1: Shaking + 3D Tilt Login Interface -->
+  <!-- Stage 1: Touch + Mouse 3D Tilt Login Interface -->
   <div class="tilt-wrap" id="tiltBox">
     <div class="lock-card" id="stage1">
       <div class="tag">SYSTEM LOCKED // LEVEL 99</div>
@@ -142,7 +150,7 @@
     <div class="fly-item fly-4">UNIVERSITY OF AGRICULTURE, FAISALABAD</div>
   </div>
 
-  <!-- Stage 3: Full-Screen Shaking Page (With Laser Web Behind) -->
+  <!-- Stage 3: Full-Screen 3D Tilt & Shaking Page -->
   <div class="full-dashboard" id="stage3">
     <div class="dash-inner" id="dashShakeBox">
       <div class="top-controls">
@@ -178,14 +186,28 @@
   </div>
 
   <script>
-    // 3D Tilt on Login Card
+    // Touch + Mouse 3D Tilt for BOTH First Page & Last Page!
     const tiltBox = document.getElementById('tiltBox');
-    document.addEventListener('mousemove', (e) => {
-      const x = (window.innerWidth / 2 - e.pageX) / 18;
-      const y = (window.innerHeight / 2 - e.pageY) / 18;
-      tiltBox.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
-    });
-    document.addEventListener('mouseleave', () => { tiltBox.style.transform = `rotateY(0deg) rotateX(0deg)`; });
+    const dashTilt = document.getElementById('dashShakeBox');
+
+    function applyTilt(clientX, clientY) {
+      const x = (window.innerWidth / 2 - clientX) / 14;
+      const y = (window.innerHeight / 2 - clientY) / 14;
+      const rot = `rotateY(${-x}deg) rotateX(${y}deg)`;
+      tiltBox.style.transform = rot;
+      dashTilt.style.transform = rot;
+    }
+    function resetTilt() {
+      tiltBox.style.transform = `rotateY(0deg) rotateX(0deg)`;
+      dashTilt.style.transform = `rotateY(0deg) rotateX(0deg)`;
+    }
+
+    document.addEventListener('mousemove', (e) => applyTilt(e.clientX, e.clientY));
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) applyTilt(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    document.addEventListener('mouseleave', resetTilt);
+    document.addEventListener('touchend', resetTilt);
 
     // Built-in Cyber Synth Beat
     let audioCtx = null, beatTimer = null, isPlaying = false, step = 0;
@@ -271,9 +293,8 @@
       seqTimer = setTimeout(() => {
         document.getElementById('stage2').style.display = "none";
         const stage3 = document.getElementById('stage3');
-        const dashShake = document.getElementById('dashShakeBox');
         stage3.style.display = "block";
-        dashShake.classList.remove('shake'); void dashShake.offsetWidth; dashShake.classList.add('shake');
+        dashTilt.classList.remove('shake'); void dashTilt.offsetWidth; dashTilt.classList.add('shake');
         boom(window.innerWidth / 2, window.innerHeight / 2);
       }, 4500);
     }
