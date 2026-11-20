@@ -10,5 +10,8 @@ jobs:
       - name: code Checkout
         uses: actions/checkout@v4
 
+      - name: Python Files check
+        run: python3 -m complieall .
+        
       - name: MUNEEB BHAI
         run: echo "MUNEEB BHAI AP KA CODE SAHI SE RUN HOGYA HA..."
