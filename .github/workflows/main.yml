@@ -13,5 +13,5 @@ jobs:
       - name: Python Files check
         run: python3 -m compileall .
         
-      - name: MUNEEB BHAI
+      - name: CODE SUCCESSFULLY RUN
         run: echo "MUNEEB BHAI AP KA CODE SAHI SE RUN HOGYA HA..."
