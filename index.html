@@ -3,96 +3,170 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Muneeb Bhai - Live Portal</title>
+  <title>VIP Secret Vault 🔒</title>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #1e1b4b, #090d16);
       color: #ffffff;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
     }
-    .card {
-      background: #1e293b;
-      padding: 35px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      width: 320px;
+    .container {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 40px 30px;
+      border-radius: 24px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+      width: 350px;
       text-align: center;
-      border: 1px solid #334155;
+      transition: transform 0.3s ease;
     }
-    h2 { color: #38bdf8; margin-bottom: 10px; }
-    p { color: #94a3b8; font-size: 14px; margin-bottom: 20px; }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, #38bdf8, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
     input {
       width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
+      padding: 14px;
+      border-radius: 12px;
       border: 1px solid #334155;
-      background: #0f172a;
-      color: white;
-      box-sizing: border-box;
+      background: rgba(15, 23, 42, 0.8);
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      letter-spacing: 3px;
+      outline: none;
+      transition: 0.3s;
+    }
+    input:focus {
+      border-color: #a855f7;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
     }
     button {
       width: 100%;
-      padding: 12px;
-      margin-top: 15px;
+      padding: 14px;
+      margin-top: 18px;
       border: none;
-      border-radius: 8px;
-      background: #38bdf8;
-      color: #0f172a;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+      color: white;
       font-weight: bold;
       font-size: 16px;
       cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
     }
-    button:hover { background: #0284c7; color: white; }
-    .error { color: #f87171; font-size: 13px; margin-top: 10px; display: none; }
-    .dashboard { display: none; }
-    .logout-btn { background: #ef4444; color: white; margin-top: 20px; }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(139, 92, 246, 0.6);
+    }
+    .error {
+      color: #f43f5e;
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+      font-weight: 500;
+    }
+    /* Meme Screen */
+    .meme-screen { display: none; animation: popIn 0.4s ease; }
+    .meme-box {
+      background: #0f172a;
+      border: 2px dashed #a855f7;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+    .big-emoji { font-size: 75px; display: block; margin-bottom: 10px; }
+    .meme-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: #facc15;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+    .sub-meme {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-top: 8px;
+    }
+    .back-btn {
+      background: #334155;
+      box-shadow: none;
+      margin-top: 10px;
+    }
+    .back-btn:hover { background: #475569; box-shadow: none; }
+    @keyframes popIn {
+      0% { transform: scale(0.7); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Login Box -->
-  <div class="card" id="loginBox">
-    <h2>Muneeb Portal</h2>
-    <p>Aage jane ke liye login karein</p>
-    <input type="text" id="username" placeholder="Username (muneeb)">
-    <input type="password" id="password" placeholder="Password (1234)">
-    <button onclick="login()">Login Karein</button>
-    <div class="error" id="errorMsg">Ghalat Username ya Password!</div>
+  <!-- Lock Screen -->
+  <div class="container" id="lockScreen">
+    <div class="badge">TOP SECRET 🔒</div>
+    <h1>Muneeb's Vault</h1>
+    <p>Andar aane ke liye secret code likhein</p>
+    <input type="password" id="passInput" placeholder="••••" onkeypress="if(event.key==='Enter') unlock()">
+    <button onclick="unlock()">Unlock Karein 🚀</button>
+    <div class="error" id="errorMsg">❌ Galat Password! Dobara koshish karein.</div>
   </div>
 
-  <!-- Dashboard Box (Login ke baad dikhega) -->
-  <div class="card dashboard" id="dashboardBox">
-    <h2>🎉 Khush Amdeed!</h2>
-    <p>Assalam-o-Alaikum <b>Muneeb Bhai</b>! Aapki CI/CD pipeline aur live website bilkul sahi kaam kar rahi hai.</p>
-    <button class="logout-btn" onclick="logout()">Logout</button>
+  <!-- Meme Screen -->
+  <div class="container meme-screen" id="memeScreen">
+    <div class="badge" style="color:#facc15; border-color:#facc15;">SURPRISE 😂</div>
+    <div class="meme-box">
+      <span class="big-emoji">🤡🖕🏻</span>
+      <div class="meme-text">"Kya laga tha khazana milega?"</div>
+      <div class="sub-meme">Muneeb Bhai ki taraf se special salam! Nikal pehli fursat mein 😂</div>
+    </div>
+    <button class="back-btn" onclick="lockAgain()">Wapas Lock Karein 🔒</button>
   </div>
 
   <script>
-    function login() {
-      const user = document.getElementById('username').value;
-      const pass = document.getElementById('password').value;
-      const errorMsg = document.getElementById('errorMsg');
-
-      if (user === "muneeb" && pass === "1234") {
-        document.getElementById('loginBox').style.display = "none";
-        document.getElementById('dashboardBox').style.display = "block";
-        errorMsg.style.display = "none";
+    function unlock() {
+      const pass = document.getElementById('passInput').value;
+      const error = document.getElementById('errorMsg');
+      if (pass === "1234") {
+        document.getElementById('lockScreen').style.display = "none";
+        document.getElementById('memeScreen').style.display = "block";
+        error.style.display = "none";
       } else {
-        errorMsg.style.display = "block";
+        error.style.display = "block";
       }
     }
 
-    function logout() {
-      document.getElementById('dashboardBox').style.display = "none";
-      document.getElementById('loginBox').style.display = "block";
-      document.getElementById('username').value = "";
-      document.getElementById('password').value = "";
+    function lockAgain() {
+      document.getElementById('memeScreen').style.display = "none";
+      document.getElementById('lockScreen').style.display = "block";
+      document.getElementById('passInput').value = "";
     }
   </script>
 
