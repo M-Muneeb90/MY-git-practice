@@ -1,0 +1,15 @@
+name: MY NOTIFICATION
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  Alert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: code Checkout
+        uses: actions/checkout@v4
+
+      - name: MUNEEB BHAI
+        run: echo "MUNEEB BHAI AP KA CODE SAHI SE RUN HOGYA HA..."
