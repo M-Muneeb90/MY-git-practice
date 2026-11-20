@@ -3,226 +3,214 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MUNEEB // JARVIS COMMAND CENTER ⚡</title>
+  <title>MUNEEB // BSCS 3D IDENTITY ⚡</title>
   <style>
     @import url('https://googleapis.com');
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Share Tech Mono', monospace; background: #02040a; color: #00f3ff;
-      min-height: 100vh; overflow-x: hidden; display: flex; justify-content: center; align-items: center; padding: 20px;
+      font-family: 'Rajdhani', sans-serif; background: #03040b; color: #fff;
+      min-height: 100vh; overflow-x: hidden; display: flex; justify-content: center;
+      align-items: center; padding: 20px; perspective: 1200px;
     }
-    canvas#holoCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-    .scanline {
-      position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 243, 255, 0.04) 50%); background-size: 100% 4px;
+    canvas#fxCanvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    .cyber-grid {
+      position: fixed; bottom: -25%; left: -50%; width: 200%; height: 75%;
+      background-image: linear-gradient(to right, rgba(0, 243, 255, 0.14) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(232, 121, 249, 0.14) 1px, transparent 1px);
+      background-size: 45px 45px; transform: rotateX(75deg); animation: gridRun 3.5s linear infinite; z-index: 0; pointer-events: none;
     }
-    .hud-container {
-      position: relative; z-index: 2; width: 100%; max-width: 450px;
-      background: rgba(5, 12, 26, 0.82); backdrop-filter: blur(20px);
-      border: 1px solid rgba(0, 243, 255, 0.5); border-radius: 24px;
-      padding: 28px 24px; box-shadow: 0 0 50px rgba(0, 243, 255, 0.25), inset 0 0 25px rgba(0, 243, 255, 0.1);
+    @keyframes gridRun { 100% { background-position: 0 45px; } }
+    .wrapper { position: relative; z-index: 2; width: 100%; max-width: 430px; transform-style: preserve-3d; transition: transform 0.1s ease-out; }
+    .panel {
+      position: relative; border-radius: 26px; padding: 32px 26px;
+      background: rgba(8, 13, 28, 0.82); backdrop-filter: blur(22px);
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 243, 255, 0.25);
+      overflow: hidden; text-align: center;
     }
-    .top-bar { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #38bdf8; margin-bottom: 14px; border-bottom: 1px solid rgba(0, 243, 255, 0.25); padding-bottom: 10px; }
-    .status-dot { display: inline-block; width: 9px; height: 9px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; margin-right: 6px; animation: blink 1s infinite; }
-    @keyframes blink { 50% { opacity: 0.3; } }
-    h1 {
-      font-family: 'Orbitron', sans-serif; font-size: 25px; font-weight: 900; text-align: center;
+    .panel::before {
+      content: ""; position: absolute; inset: -3px; border-radius: 28px;
+      background: conic-gradient(from 0deg, #00f3ff, #ff00ea, #ffe600, #00f3ff); z-index: -2; animation: spinBorder 3s linear infinite;
+    }
+    .panel::after { content: ""; position: absolute; inset: 2px; border-radius: 24px; background: radial-gradient(circle at top, #101938, #060914); z-index: -1; }
+    @keyframes spinBorder { 100% { transform: rotate(360deg); } }
+    .tag {
+      display: inline-block; font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 2px;
+      padding: 6px 16px; border-radius: 50px; color: #00f3ff; background: rgba(0, 243, 255, 0.1);
+      border: 1px solid rgba(0, 243, 255, 0.45); margin-bottom: 16px;
+    }
+    .title-glitch {
+      font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 900; letter-spacing: 2px;
       background: linear-gradient(90deg, #00f3ff, #e879f9, #ffe600); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      letter-spacing: 2px; margin-bottom: 6px;
+      margin-bottom: 8px;
     }
-    .subtitle { text-align: center; font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
-    .terminal-box {
-      background: rgba(1, 4, 12, 0.92); border: 1px solid rgba(0, 243, 255, 0.35);
-      border-radius: 12px; padding: 12px; height: 105px; overflow: hidden;
-      font-size: 12px; color: #22c55e; line-height: 1.5; margin-bottom: 16px;
-    }
-    .scanner-section { margin-bottom: 18px; }
-    .input-row { display: flex; gap: 8px; }
+    .sub { color: #94a3b8; font-size: 15px; margin-bottom: 22px; }
     input {
-      flex: 1; padding: 13px; border-radius: 12px; border: 1px solid rgba(0, 243, 255, 0.45);
-      background: rgba(2, 6, 23, 0.9); color: #fff; font-family: 'Share Tech Mono', monospace; font-size: 15px; outline: none;
+      width: 100%; padding: 14px; border-radius: 14px; border: 1px solid rgba(0, 243, 255, 0.45);
+      background: rgba(2, 6, 23, 0.9); color: #00f3ff; font-family: 'Orbitron', sans-serif;
+      font-size: 20px; text-align: center; letter-spacing: 5px; outline: none; transition: 0.3s;
     }
-    input:focus { border-color: #e879f9; box-shadow: 0 0 18px rgba(232, 121, 249, 0.5); }
-    .btn {
-      padding: 12px 18px; border: none; border-radius: 12px; font-family: 'Orbitron', sans-serif;
-      font-weight: 800; font-size: 12px; cursor: pointer; transition: 0.25s; letter-spacing: 1px;
-    }
-    .scan-btn { background: linear-gradient(135deg, #00f3ff, #38bdf8); color: #02040a; box-shadow: 0 0 18px rgba(0, 243, 255, 0.6); }
-    .scan-btn:hover { transform: scale(1.05); }
-
-    /* Animated Hologram Result Box */
-    .scan-result {
-      margin-top: 14px; padding: 16px; border-radius: 14px;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 27, 75, 0.9));
-      border: 1px solid #e879f9; box-shadow: 0 0 25px rgba(232, 121, 249, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.2);
-      display: none; text-align: left; position: relative; overflow: hidden;
-      animation: holoReveal 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    @keyframes holoReveal {
-      0% { opacity: 0; transform: scale(0.85) translateY(12px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-    .scan-header { font-family: 'Orbitron', sans-serif; font-size: 13px; color: #00f3ff; letter-spacing: 1px; margin-bottom: 6px; display: flex; justify-content: space-between; }
-    .scan-body { font-size: 14px; color: #ffe600; line-height: 1.45; font-weight: bold; }
-    .scan-bar { height: 4px; width: 100%; background: rgba(255,255,255,0.1); border-radius: 4px; margin-top: 10px; overflow: hidden; }
-    .scan-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #00f3ff, #e879f9, #ffe600); animation: barLoad 1.2s ease-out; }
-    @keyframes barLoad { 0% { width: 0%; } 100% { width: 100%; } }
-
-    .overdrive-btn {
-      width: 100%; padding: 15px; font-size: 13px; color: #02040a;
+    input::placeholder { color: rgba(148, 163, 184, 0.5); font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; font-size: 15px; }
+    input:focus { border-color: #ff00ea; box-shadow: 0 0 22px rgba(255, 0, 234, 0.6); }
+    .cyber-btn {
+      width: 100%; padding: 15px; margin-top: 20px; border: none; border-radius: 14px;
+      font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 800; letter-spacing: 2px; color: #03040b;
       background: linear-gradient(90deg, #00f3ff, #ff00ea, #ffe600); background-size: 200% auto;
-      box-shadow: 0 0 25px rgba(255, 0, 234, 0.5); animation: flow 3s linear infinite;
+      cursor: pointer; transition: 0.3s; box-shadow: 0 0 25px rgba(0, 243, 255, 0.5); animation: flow 3s linear infinite;
     }
     @keyframes flow { 100% { background-position: 200% 50%; } }
-    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 16px; text-align: center; }
-    .stat-card { background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 243, 255, 0.2); border-radius: 10px; padding: 8px; }
-    .stat-val { font-family: 'Orbitron', sans-serif; font-size: 14px; color: #ffe600; font-weight: bold; }
-    .stat-lbl { font-size: 10px; color: #94a3b8; margin-top: 2px; }
-    .shake { animation: shake 0.4s ease; }
-    @keyframes shake { 25% { transform: translateX(-6px); } 50% { transform: translateX(6px); } 75% { transform: translateX(-4px); } }
+    .cyber-btn:hover { transform: scale(1.03); box-shadow: 0 0 35px rgba(255, 0, 234, 0.85); }
+    .err { color: #ff2a6d; font-size: 14px; margin-top: 12px; display: none; font-weight: 700; }
+    .shake { animation: shakeAnim 0.45s ease; }
+    @keyframes shakeAnim { 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
+
+    /* Profile Staggered Cards */
+    .profile-view { display: none; text-align: left; }
+    .info-card {
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 27, 75, 0.75));
+      border-left: 4px solid #00f3ff; border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px; padding: 13px 16px; margin-bottom: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      opacity: 0; transform: translateX(-35px) scale(0.95);
+      animation: slideInCard 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .info-card:nth-child(2) { animation-delay: 0.25s; border-left-color: #e879f9; }
+    .info-card:nth-child(3) { animation-delay: 0.55s; border-left-color: #ffe600; }
+    .info-card:nth-child(4) { animation-delay: 0.85s; border-left-color: #22c55e; }
+    .info-card:nth-child(5) { animation-delay: 1.15s; border-left-color: #ff2a6d; }
+    @keyframes slideInCard {
+      to { opacity: 1; transform: translateX(0) scale(1); }
+    }
+    .lbl { font-family: 'Orbitron', sans-serif; font-size: 10px; letter-spacing: 2px; color: #38bdf8; text-transform: uppercase; margin-bottom: 3px; }
+    .val { font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px; }
+    .highlight { color: #ffe600; text-shadow: 0 0 12px rgba(255, 230, 0, 0.5); }
+    .lock-btn { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: none; margin-top: 10px; }
   </style>
 </head>
 <body>
-  <canvas id="holoCanvas"></canvas>
-  <div class="scanline"></div>
-  <video id="bgVoice" src="mp3.mp4" playsinline loop style="display:none;"></video>
+  <div class="cyber-grid"></div>
+  <canvas id="fxCanvas"></canvas>
 
-  <div class="hud-container" id="hudBox">
-    <div class="top-bar">
-      <span><span class="status-dot"></span>MUNEEB_OS v9.9</span>
-      <span id="liveClock">00:00:00</span>
-    </div>
-    <h1>JARVIS CORE</h1>
-    <div class="subtitle">AUTONOMOUS CI/CD & NEURAL COMMAND</div>
-    <div class="terminal-box" id="terminal"></div>
-
-    <div class="scanner-section">
-      <div class="input-row">
-        <input type="text" id="targetName" placeholder="Write their name..." onkeypress="if(event.key==='Enter') scanTarget()">
-        <button class="btn scan-btn" onclick="scanTarget()">SCAN 🎯</button>
-      </div>
-      <div class="scan-result" id="scanResult">
-        <div class="scan-header"><span id="resTitle">TARGET VERIFIED</span><span>100% MATCH</span></div>
-        <div class="scan-body" id="resText"></div>
-        <div class="scan-bar"><div class="scan-fill" id="resBar"></div></div>
-      </div>
+  <div class="wrapper" id="tiltCard">
+    <!-- Step 1: Password Screen -->
+    <div class="panel" id="lockBox">
+      <div class="tag">ENCRYPTED IDENTITY // VERIFY</div>
+      <div class="title-glitch">ACCESS PORTAL</div>
+      <div class="sub">Enter security key to unlock profile</div>
+      <input type="password" id="passKey" placeholder="Hint: 12" onkeypress="if(event.key==='Enter') openPortal()">
+      <button class="cyber-btn" onclick="openPortal()">UNLOCK IDENTITY ⚡</button>
+      <div class="err" id="errText">⚠️ INVALID KEY! Hint: 12</div>
     </div>
 
-    <button class="btn overdrive-btn" id="odBtn" onclick="toggleOverdrive()">⚡ ACTIVATE OVERDRIVE + AUDIO ⚡</button>
+    <!-- Step 2: Animated Profile Screen -->
+    <div class="panel profile-view" id="profileBox">
+      <div style="text-align:center;">
+        <div class="tag" style="color:#ffe600; border-color:#ffe600;">VERIFIED COMMANDER PROFILE 🔥</div>
+      </div>
 
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-val">99.9%</div><div class="stat-lbl">CI/CD UPTIME</div></div>
-      <div class="stat-card"><div class="stat-val">120 FPS</div><div class="stat-lbl">3D ENGINE</div></div>
-      <div class="stat-card"><div class="stat-val">GOD</div><div class="stat-lbl">ACCESS LVL</div></div>
+      <!-- Visible Play Bar for mp3.mp4 -->
+      <video id="bgVoice" src="mp3.mp4" controls playsinline loop style="width:100%; height:40px; margin-bottom:14px; border-radius:10px;"></video>
+
+      <div id="cardsList">
+        <div class="info-card">
+          <div class="lbl">01 // COMMANDER NAME</div>
+          <div class="val highlight">MUNEEB</div>
+        </div>
+        <div class="info-card">
+          <div class="lbl">02 // DEGREE & CLASS</div>
+          <div class="val">BSCS (Bachelor of Science in Computer Science)</div>
+        </div>
+        <div class="info-card">
+          <div class="lbl">03 // CURRENT SEMESTER</div>
+          <div class="val highlight">5th Semester</div>
+        </div>
+        <div class="info-card">
+          <div class="lbl">04 // UNIVERSITY</div>
+          <div class="val">University of Agriculture, Faisalabad</div>
+        </div>
+        <div class="info-card">
+          <div class="lbl">05 // BEST CLASSMATES</div>
+          <div class="val highlight">Mohsin + Faisal 🔥</div>
+        </div>
+      </div>
+
+      <button class="cyber-btn lock-btn" onclick="closePortal()">LOCK PORTAL 🔒</button>
     </div>
   </div>
 
   <script>
-    setInterval(() => { document.getElementById('liveClock').innerText = new Date().toLocaleTimeString(); }, 1000);
-    const logs = [
-      "> Initializing Muneeb Neural Core...",
-      "> GitHub Actions CI/CD Pipeline: VERIFIED [OK]",
-      "> Biometric Voice Synthesizer: ONLINE",
-      "> Waiting for target name..."
-    ];
-    let logIdx = 0;
-    const term = document.getElementById('terminal');
-    function typeLogs() {
-      if (logIdx < logs.length) {
-        const line = document.createElement('div'); line.innerText = logs[logIdx++];
-        term.appendChild(line); setTimeout(typeLogs, 600);
-      }
-    }
-    typeLogs();
+    // 3D Tilt Physics
+    const tilt = document.getElementById('tiltCard');
+    document.addEventListener('mousemove', (e) => {
+      const x = (window.innerWidth / 2 - e.pageX) / 22;
+      const y = (window.innerHeight / 2 - e.pageY) / 22;
+      tilt.style.transform = `rotateY(${-x}deg) rotateX(${y}deg)`;
+    });
+    document.addEventListener('mouseleave', () => { tilt.style.transform = `rotateY(0deg) rotateX(0deg)`; });
 
-    const profiles = {
-      "faisal": "Top secret architect detected. System respects his unmatched focus and high IQ.",
-      "mohsin": "Master strategist online. Always calm under pressure with zero panic detected.",
-      "usman": "High-energy legend scanned. Warning: Too much confidence detected in the room.",
-      "shahzaib": "Royal aura verified. Walks in like he owns the entire cloud server.",
-      "qudoos": "Silent genius alert. Minimal words, maximum brainpower.",
-      "ali raza": "Elite commander vibes. Loyalty and leadership rated at one hundred percent.",
-      "husnain": "Charisma overload. Smooth operator with unstoppable energy.",
-      "hussaiin": "Charisma overload. Smooth operator with unstoppable energy.",
-      "hussain": "Charisma overload. Smooth operator with unstoppable energy.",
-      "burhan": "Heavyweight thinker detected. Solves complex problems before they even start.",
-      "ryan": "Future tech mogul vibes. Speed, style, and intelligence off the charts.",
-      "haseeb": "Sharpest mind in the building. Precision level: absolute perfection.",
-      "awais": "Certified chill legend. Zero stress and maximum positive vibes.",
-      "hassan": "Alpha leader scanned. Respect level automatically boosted to maximum."
-    };
-
-    function speakEnglish(text) {
-      window.speechSynthesis.cancel();
-      const speech = new SpeechSynthesisUtterance(text);
-      speech.lang = 'en-US';
-      speech.rate = 0.98;
-      speech.pitch = 0.95;
-      window.speechSynthesis.speak(speech);
-    }
-
-    function scanTarget() {
-      const rawName = document.getElementById('targetName').value.trim();
-      if (!rawName) return;
-      const key = rawName.toLowerCase();
-      const resBox = document.getElementById('scanResult');
-      const resTitle = document.getElementById('resTitle');
-      const resText = document.getElementById('resText');
-      const resBar = document.getElementById('resBar');
-
-      resBox.style.display = "none";
-      void resBox.offsetWidth;
-      resBox.style.display = "block";
-      resBar.style.animation = "none";
-      void resBar.offsetWidth;
-      resBar.style.animation = "barLoad 1s ease-out";
-
-      const message = profiles[key] || `Target ${rawName} scanned. VIP status confirmed by Muneeb Command Center.`;
-      resTitle.innerText = `🎯 TARGET: ${rawName.toUpperCase()}`;
-      resText.innerText = message;
-      speakEnglish(`Target ${rawName}. ${message}`);
-    }
-
-    let overdrive = false;
-    function toggleOverdrive() {
-      overdrive = !overdrive;
-      const box = document.getElementById('hudBox'), voice = document.getElementById('bgVoice'), btn = document.getElementById('odBtn');
-      box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake');
-      if (overdrive) {
-        btn.innerText = "🔥 OVERDRIVE ACTIVE (STOP) 🔥";
-        voice.muted = false;
-        voice.volume = 1.0;
-        voice.play().catch(() => { speakEnglish("Overdrive mode activated by Commander Muneeb."); });
-      } else {
-        btn.innerText = "⚡ ACTIVATE OVERDRIVE + AUDIO ⚡";
-        voice.pause();
-      }
-    }
-
-    const canvas = document.getElementById('holoCanvas'), ctx = canvas.getContext('2d');
+    // Particle Network + Fireworks Canvas
+    const canvas = document.getElementById('fxCanvas'), ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-    let dots = [], angle = 0;
-    for (let i = 0; i < 160; i++) {
-      const theta = Math.acos(2 * Math.random() - 1), phi = 2 * Math.PI * Math.random();
-      dots.push({ x: Math.sin(theta) * Math.cos(phi), y: Math.sin(theta) * Math.sin(phi), z: Math.cos(theta) });
+    let dots = [], sparks = [], colors = ['#00f3ff', '#ff00ea', '#ffe600', '#22c55e'];
+
+    for (let i = 0; i < 65; i++) {
+      dots.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 1.3, vy: (Math.random() - 0.5) * 1.3, r: Math.random() * 2.5 + 1, c: colors[i % colors.length] });
     }
-    function drawSphere() {
-      ctx.fillStyle = "rgba(2, 4, 10, 0.25)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-      angle += overdrive ? 0.045 : 0.01;
-      const radius = Math.min(canvas.width, canvas.height) * (overdrive ? 0.42 : 0.34);
-      const cx = canvas.width / 2, cy = canvas.height / 2;
-      dots.forEach((d, idx) => {
-        const rx = d.x * Math.cos(angle) - d.z * Math.sin(angle);
-        const rz = d.z * Math.cos(angle) + d.x * Math.sin(angle);
-        const scale = 300 / (300 + rz * radius);
-        const px = cx + rx * radius * scale, py = cy + d.y * radius * scale;
-        ctx.beginPath(); ctx.arc(px, py, (overdrive ? 3 : 2) * scale, 0, Math.PI * 2);
-        ctx.fillStyle = overdrive ? (idx % 2 === 0 ? "#ff00ea" : "#ffe600") : "#00f3ff"; ctx.fill();
+    function boom(x, y) {
+      for (let i = 0; i < 85; i++) {
+        const a = Math.random() * Math.PI * 2, s = Math.random() * 7 + 2;
+        sparks.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, alpha: 1, r: Math.random() * 3.5 + 1.5, c: colors[i % colors.length] });
+      }
+    }
+    function loopFX() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      dots.forEach((p, i) => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = p.c; ctx.fill();
+        for (let j = i + 1; j < dots.length; j++) {
+          const d = Math.hypot(p.x - dots[j].x, p.y - dots[j].y);
+          if (d < 105) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(dots[j].x, dots[j].y); ctx.strokeStyle = `rgba(0,243,255,${1 - d / 105})`; ctx.lineWidth = 0.5; ctx.stroke(); }
+        }
       });
-      requestAnimationFrame(drawSphere);
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i]; s.x += s.vx; s.y += s.vy; s.vy += 0.12; s.alpha -= 0.018;
+        if (s.alpha <= 0) { sparks.splice(i, 1); continue; }
+        ctx.globalAlpha = s.alpha; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fillStyle = s.c; ctx.fill(); ctx.globalAlpha = 1;
+      }
+      requestAnimationFrame(loopFX);
     }
-    drawSphere();
+    loopFX();
+
+    function openPortal() {
+      const val = document.getElementById('passKey').value.trim();
+      const lockBox = document.getElementById('lockBox');
+      const err = document.getElementById('errText');
+      if (val === "12") {
+        lockBox.style.display = "none";
+        const prof = document.getElementById('profileBox');
+        prof.style.display = "block";
+        prof.classList.add('shake');
+        err.style.display = "none";
+        boom(window.innerWidth / 2, window.innerHeight / 2);
+        setTimeout(() => boom(window.innerWidth * 0.3, window.innerHeight * 0.35), 300);
+        setTimeout(() => boom(window.innerWidth * 0.7, window.innerHeight * 0.35), 600);
+        const v = document.getElementById('bgVoice');
+        v.muted = false; v.play().catch(() => {});
+      } else {
+        err.style.display = "block";
+        lockBox.classList.remove('shake'); void lockBox.offsetWidth; lockBox.classList.add('shake');
+      }
+    }
+
+    function closePortal() {
+      const v = document.getElementById('bgVoice');
+      v.pause(); v.currentTime = 0;
+      document.getElementById('profileBox').style.display = "none";
+      document.getElementById('lockBox').style.display = "block";
+      document.getElementById('passKey').value = "";
+    }
   </script>
 </body>
 </html>
