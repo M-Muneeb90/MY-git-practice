@@ -1,5 +1,5 @@
 name: MY NOTIFICATION
-
+run-name: "✅ MUNEEB BHAI AP KA CODE SAHI SE RUN HOGYA HA..."
 on:
   push:
     branches: [ "master" ]
@@ -12,4 +12,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: MUNEEB BHAI
-        run: echo "MUNEEB BHAI AP KA CODE SAHI SE RUN HOGYA HA..." >> $GITHUB_STEP_SUMMARY
+        run: echo "MUNEEB BHAI AP KA CODE SAHI SE RUN HOGYA HA..."
