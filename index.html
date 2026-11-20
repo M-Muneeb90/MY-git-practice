@@ -3,239 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Muneeb's 3D Vault 🔒</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: #05070e;
-      color: #ffffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-      perspective: 1000px;
-    }
-
-    /* 3D Moving Neon Lights */
-    .light {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
-      opacity: 0.65;
-      z-index: 0;
-      animation: moveLights 8s infinite alternate ease-in-out;
-    }
-    .light-1 { width: 320px; height: 320px; background: #7c3aed; top: -60px; left: -60px; }
-    .light-2 { width: 350px; height: 350px; background: #06b6d4; bottom: -80px; right: -60px; animation-delay: 2s; }
-    .light-3 { width: 220px; height: 220px; background: #ec4899; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-
-    @keyframes moveLights {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(40px, -40px) scale(1.2); }
-    }
-
-    /* 3D Glass Card */
-    .card {
-      position: relative;
-      z-index: 1;
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      padding: 35px 28px;
-      border-radius: 26px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), inset 0 0 20px rgba(56, 189, 248, 0.15);
-      width: 360px;
-      text-align: center;
-      transform-style: preserve-3d;
-      animation: cardFloat 4s ease-in-out infinite;
-    }
-
-    @keyframes cardFloat {
-      0%, 100% { transform: translateY(0px) rotateX(2deg) rotateY(-2deg); }
-      50% { transform: translateY(-10px) rotateX(-2deg) rotateY(2deg); }
-    }
-
-    .badge {
-      display: inline-block;
-      background: rgba(56, 189, 248, 0.15);
-      color: #38bdf8;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      margin-bottom: 14px;
-      border: 1px solid rgba(56, 189, 248, 0.4);
-    }
-
-    h1 {
-      font-size: 26px;
-      margin-bottom: 8px;
-      background: linear-gradient(90deg, #38bdf8, #e879f9, #facc15);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    p { color: #cbd5e1; font-size: 14px; margin-bottom: 22px; }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(2, 6, 23, 0.75);
-      color: #fff;
-      font-size: 18px;
-      text-align: center;
-      letter-spacing: 4px;
-      outline: none;
-    }
-    input::placeholder { color: rgba(148, 163, 184, 0.45); letter-spacing: 1px; font-size: 14px; }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 18px;
-      border: none;
-      border-radius: 14px;
-      background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ec4899);
-      color: white;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.5);
-    }
-
-    .error { color: #fb7185; font-size: 13px; margin-top: 12px; display: none; }
-
-    /* Media (Photo & Video) Styling */
-    .meme-screen { display: none; }
-    .media-item {
-      width: 100%;
-      max-height: 220px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin-bottom: 12px;
-      border: 2px solid #e879f9;
-      box-shadow: 0 10px 25px rgba(232, 121, 249, 0.4);
-      display: none;
-    }
-
-    .floating-3d-object {
-      font-size: 70px;
-      display: inline-block;
-      margin: 8px 0;
-      animation: spin3D 3s infinite ease-in-out;
-    }
-
-    @keyframes spin3D {
-      0%, 100% { transform: translateY(0) rotateY(-18deg) scale(1); }
-      50% { transform: translateY(-12px) rotateY(18deg) scale(1.1); }
-    }
-
-    .meme-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: #facc15;
-      margin-top: 6px;
-    }
-
-    .back-btn { background: rgba(51, 65, 85, 0.8); box-shadow: none; margin-top: 15px; }
-  </style>
-</head>
-<body>
-
-  <div class="light light-1"></div>
-  <div class="light light-2"></div>
-  <div class="light light-3"></div>
-
-  <!-- Lock Screen -->
-  <div class="card" id="lockScreen">
-    <div class="badge">VIP ACCESS 🔒</div>
-    <h1>Muneeb's 3D Vault</h1>
-    <p>Secret code enter karein</p>
-    <input type="password" id="passInput" placeholder="Hint: 12" onkeypress="if(event.key==='Enter') unlock()">
-    <button onclick="unlock()">Unlock Now ⚡</button>
-    <div class="error" id="errorMsg">❌ Galat code! Hint dekhein: 12</div>
-  </div>
-
-  <!-- Meme Screen -->
-  <div class="card meme-screen" id="memeScreen">
-    <div class="badge" style="color:#facc15; border-color:#facc15;">SURPRISE 😂</div>
-
-    <!-- Video (agar meme.mp4 upload hogi to khud chalegi) -->
-    <video id="memeVideo" class="media-item" src="meme.mp4" playsinline loop onloadeddata="this.style.display='block'"></video>
-
-    <!-- Photo (agar meme.jpg upload hogi to khud dikhegi) -->
-    <img id="memePic" class="media-item" src="meme.jpg" alt="Meme" onload="this.style.display='block'">
-
-    <!-- 3D Floating Joker & Emoji -->
-    <div class="floating-3d-object">🤡🖕🏻</div>
-
-    <div class="meme-title">Muneeb Bhai Ki Taraf Se Special Gift! 😂</div>
-    <button class="back-btn" onclick="lockAgain()">Wapas Lock Karein 🔒</button>
-  </div>
-
-  <audio id="prankAudio" src="sound.mp3"></audio>
-
-  <script>
-    function unlock() {
-      const pass = document.getElementById('passInput').value;
-      const error = document.getElementById('errorMsg');
-
-      if (pass === "12") {
-        document.getElementById('lockScreen').style.display = "none";
-        document.getElementById('memeScreen').style.display = "block";
-        error.style.display = "none";
-
-        const video = document.getElementById('memeVideo');
-        if (video.style.display === 'block') {
-          video.play();
-        } else {
-          document.getElementById('prankAudio').play().catch(() => {});
-        }
-      } else {
-        error.style.display = "block";
-      }
-    }
-
-    function lockAgain() {
-      const video = document.getElementById('memeVideo');
-      const audio = document.getElementById('prankAudio');
-      video.pause();
-      video.currentTime = 0;
-      audio.pause();
-      audio.currentTime = 0;
-
-      document.getElementById('memeScreen').style.display = "none";
-      document.getElementById('lockScreen').style.display = "block";
-      document.getElementById('passInput').value = "";
-    }
-  </script>
-
-</body>
-</html>
-Use code with caution.
-
-GitHub Par Photo Ya Video Kaise Upload Karein?
-
-1. Apni repository ke main page par Add file > Upload files par click karein.
-2. Agar photo lagani ho to file ka naam meme.jpg rakhein; agar video lagani ho to naam meme.mp4 rakhein.
-3. File drag karke neeche Commit changes daba dein—GitHub Action khud chalega aur aapki live website par photo/video add ho jayegi!
-Aap apni photo (meme.jpg) ya video (meme.mp4) upload karke dekhein—agar kisi file ke format (jaise .png ya .mov) mein masla aaye to bata dein.
-
-nhi maza nhi aya is main is high level animation add ker karo puri aag laga du developer crying in the corner ker du
-
-Yeh lijiye "Developer Crying in the Corner" level ki ultra-heavy 3D particle canvas, mouse-tilt physics, glitch effects, aur unlock hote hi screen shake + laser confetti explosion wala index.html code—bina kisi external library ke seedha chalega!
-Apni index.html ka purana saara code hata kar yeh paste karein aur Commit changes daba dein:
-html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MUNEEB // CYBER VAULT ⚡</title>
   <style>
     @import url('https://googleapis.com');
@@ -262,7 +29,6 @@ html
       pointer-events: none;
     }
 
-    /* Cyber Grid Floor */
     .cyber-grid {
       position: fixed;
       bottom: -30%;
@@ -283,7 +49,6 @@ html
       100% { background-position: 0 50px; }
     }
 
-    /* 3D Interactive Tilt Card */
     .vault-wrapper {
       position: relative;
       z-index: 2;
@@ -307,7 +72,6 @@ html
       overflow: hidden;
     }
 
-    /* Animated Neon Conic Border */
     .card::before {
       content: "";
       position: absolute;
@@ -344,7 +108,6 @@ html
       transform: translateZ(30px);
     }
 
-    /* Glitch Title */
     .glitch {
       font-family: 'Orbitron', sans-serif;
       font-size: 28px;
@@ -432,7 +195,6 @@ html
       text-shadow: 0 0 10px rgba(255, 42, 109, 0.7);
     }
 
-    /* Screen Shake on Wrong/Unlock */
     .shake { animation: shakeAnim 0.45s cubic-bezier(.36,.07,.19,.97) both; }
     @keyframes shakeAnim {
       10%, 90% { transform: translate3d(-4px, 0, 0); }
@@ -441,7 +203,6 @@ html
       40%, 60% { transform: translate3d(10px, 0, 0); }
     }
 
-    /* Meme Screen */
     .meme-screen { display: none; }
     .media-item {
       width: 100%;
@@ -494,7 +255,6 @@ html
   <canvas id="fxCanvas"></canvas>
 
   <div class="vault-wrapper" id="tiltBox">
-    <!-- Lock Screen -->
     <div class="card" id="lockScreen">
       <div class="badge">SYSTEM LOCKED // LVL 99</div>
       <div class="glitch">MUNEEB VAULT</div>
@@ -504,7 +264,6 @@ html
       <div class="error" id="errorMsg">⚠️ ACCESS DENIED! Hint: 12</div>
     </div>
 
-    <!-- Meme Screen -->
     <div class="card meme-screen" id="memeScreen">
       <div class="badge" style="color:#ffe600; border-color:#ffe600;">SYSTEM HACKED 😂</div>
 
@@ -520,7 +279,6 @@ html
   <audio id="prankAudio" src="sound.mp3"></audio>
 
   <script>
-    // 1. 3D Mouse & Touch Parallax Tilt Physics
     const tiltBox = document.getElementById('tiltBox');
     document.addEventListener('mousemove', (e) => {
       const x = (window.innerWidth / 2 - e.pageX) / 18;
@@ -531,7 +289,6 @@ html
       tiltBox.style.transform = `rotateY(0deg) rotateX(0deg)`;
     });
 
-    // 2. Interactive Cyber Particle Network + Fireworks Canvas
     const canvas = document.getElementById('fxCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -567,7 +324,7 @@ html
           alpha: 1,
           size: Math.random() * 4 + 2,
           color: colors[Math.floor(Math.random() * colors.length)]
-        });
+          });
       }
     }
 
